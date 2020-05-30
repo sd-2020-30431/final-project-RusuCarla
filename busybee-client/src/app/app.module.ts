@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { BoardComponent } from './pages/board/board.component';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { LoginComponent } from './pages/login/login.component';
+import { BoardsComponent } from './pages/boards/boards.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BoardComponent
+    BoardComponent,
+    LoginComponent,
+    BoardsComponent
   ],
   imports: [
     BrowserModule,
