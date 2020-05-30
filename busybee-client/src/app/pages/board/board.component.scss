@@ -28,11 +28,14 @@
   .board-bar {
     background: rgba(gray, .5);
     padding: 8px 15px;
+    display: flex;
+    flex-direction: row;
 
     .board-name {
       font-size: 20px;
       font-weight: bold;
       color: #45f69e;
+      padding-right: 20px;
     }
   }
 
@@ -40,6 +43,7 @@
     display: flex;
     flex-grow: 1;
     overflow-x: auto;
+    overflow-y: auto;
 
     .board-columns {
       display: flex;
@@ -50,6 +54,7 @@
         flex-direction: column;
         flex-grow: 1;
         flex-basis: 0; // force the columns to all be the same size regardless of content
+        overflow-y: auto;
 
         min-width: 300px;
         margin: 50px;
@@ -69,6 +74,24 @@
           font-family: 'Nunito', sans-serif;
           text-transform: uppercase;
           margin-bottom: 20px;
+        }
+      }
+
+      .new-board-column {
+        display: flex;
+        flex-direction: column;
+
+        min-width: 300px;
+        max-height: 100px;
+        margin: 50px;
+        padding: 25px;
+
+        border-radius: 4px;
+
+        background: rgba(white, .5);
+
+        &:not(:first-child){
+          margin-left: 0;
         }
       }
     }
@@ -121,4 +144,12 @@
   font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.bottom-content{
+  align-self: flex-end;
+}
+
+.align-center {
+  align-self: center;
 }

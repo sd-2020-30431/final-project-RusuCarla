@@ -26,6 +26,10 @@
   padding: 42px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+
+  .bottom-content{
+    align-self: flex-end;
+  }
 }
 
 .title {

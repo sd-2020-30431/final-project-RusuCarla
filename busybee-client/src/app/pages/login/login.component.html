@@ -5,7 +5,7 @@
 
     <div class="field">
       <p class="control has-icons-left has-icons-right">
-        <input class="input has-background-light" placeholder="Email" type="email">
+        <input [(ngModel)]="loginModel.username" class="input has-background-light" placeholder="Email" type="email">
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -14,7 +14,7 @@
     </div>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input has-background-light" placeholder="Password" type="password">
+        <input [(ngModel)]="loginModel.password" class="input has-background-light" placeholder="Password" type="password">
         <span class="icon is-small is-left">
       <i class="fas fa-lock"></i>
     </span>

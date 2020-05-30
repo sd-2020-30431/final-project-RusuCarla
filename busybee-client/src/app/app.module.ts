@@ -8,6 +8,7 @@ import { BoardComponent } from './pages/board/board.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { LoginComponent } from './pages/login/login.component';
 import { BoardsComponent } from './pages/boards/boards.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BoardsComponent } from './pages/boards/boards.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DragDropModule
+    DragDropModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -45,6 +45,10 @@ export class BoardComponent implements OnInit {
     new ColumnModel('Done', this.done)
   ]);
 
+  task: string;
+
+  list: ColumnModel = new ColumnModel();
+
   ngOnInit(): void {
   }
 
@@ -57,6 +61,32 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+  }
+
+  display_modal() {
+    const modal = document.getElementById('modal-page');
+    modal.style.display = 'block';
+  }
+
+  close_modal() {
+    const modal = document.getElementById('modal-page');
+    modal.style.display = 'none';
+  }
+
+  add_task() {
+  }
+
+  add_list() {
+  }
+
+  display_list_modal() {
+    const modal = document.getElementById('modal-list-page');
+    modal.style.display = 'block';
+  }
+
+  close_list_modal() {
+    const modal = document.getElementById('modal-list-page');
+    modal.style.display = 'none';
   }
 
 }

@@ -11,21 +11,41 @@
       <h1 class="title has-text-primary">Boards</h1>
 
       <!-- Board list -->
-      <div class="board">
-        <div class="list-menu">
-          <a class="list-menu-item is-active">
-            <p>Board #1</p>
-          </a>
 
-          <a class="list-menu-item">
-            <p>Board #2</p>
-          </a>
+      <div class="list-menu">
+        <a class="list-menu-item is-active">
+          <p>Board #1</p>
+        </a>
+
+        <a class="list-menu-item">
+          <p>Board #2</p>
+        </a>
+      </div>
+
+      <div class="bottom-content">
+        <button (click)="display_modal()" class="button is-primary has-text-white" id="board-button"
+                style="width:200px">Add new board
+        </button>
+      </div>
+
+      <div class="modal" id="modal-page">
+        <div class="modal-background"></div>
+        <div class="modal-card" style="top: 30%">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Create new board</p>
+            <button (click)="close_modal()" aria-label="close" class="delete"></button>
+          </header>
+          <section class="modal-card-body">
+            <input [(ngModel)]="board.name" class="input has-background-light is-primary" placeholder="Add board name"
+                   type="board-name">
+          </section>
+          <footer class="modal-card-foot">
+            <button (click)="create_board()" class="button is-success">Save</button>
+            <button (click)="close_modal()" class="button">Cancel</button>
+          </footer>
         </div>
       </div>
 
-      <div class="bottomed-content">
-        <button class="button is-primary has-text-white" style="width:200px">Add new board</button>
-      </div>
     </div>
 
   </div>
