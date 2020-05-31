@@ -2,9 +2,15 @@
   <div class="boards-container">
 
     <div class="sidebar has-background-white">
-      <h1 class="title has-text-primary">User</h1>
+      <h1 class="title has-text-primary">User: {{username}}</h1>
 
-      <p>Some user info</p>
+      <div class="list-menu">
+        <p>Some user info</p>
+      </div>
+
+      <div class="bottom-content">
+        <button class="button is-success has-text-white" (click)="logout()">Log out</button>
+      </div>
     </div>
 
     <div class="boards-list-container has-background-light">
@@ -24,7 +30,7 @@
 
       <div class="bottom-content">
         <button (click)="display_modal()" class="button is-primary has-text-white" id="board-button"
-                style="width:200px">Add new board
+                style="width:150px">Add new board
         </button>
       </div>
 

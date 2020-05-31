@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginModel: LoginModel = new LoginModel();
+
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
         alert('Successfully logged in.');
         window.localStorage.setItem('userId', String(result));
         window.localStorage.setItem('username', String(this.loginModel.username));
-        this.router.navigateByUrl('/menu');
+        this.router.navigateByUrl('/boards');
       },
       error => {
         console.log(error);

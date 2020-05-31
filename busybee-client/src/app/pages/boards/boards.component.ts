@@ -11,10 +11,16 @@ import {BoardModel} from '../../models/board.model';
 export class BoardsComponent implements OnInit {
 
   board: BoardModel
+  username: string;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
+    this.username = window.localStorage.getItem('username');
+  }
+
+  logout() {
+    this.router.navigateByUrl('');
   }
 
   display_modal() {
