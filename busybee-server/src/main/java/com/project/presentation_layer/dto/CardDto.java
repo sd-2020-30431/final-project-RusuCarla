@@ -1,18 +1,18 @@
 package com.project.presentation_layer.dto;
 
-import com.project.business_layer.entity.Card;
+import com.project.business_layer.entity.Task;
 import java.util.List;
 
-public class BoardDto {
+public class CardDto {
 
     private int id;
     private String name;
-    private List<Card> cards;
+    private List<Task> tasks;
 
-    public BoardDto(int id, String name, List<Card> cards) {
+    public CardDto(int id, String name, List<Task> tasks) {
         this.id = id;
         this.name = name;
-        this.cards = cards;
+        this.tasks = tasks;
     }
 
     public int getId() {
@@ -31,20 +31,20 @@ public class BoardDto {
         this.name = name;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
     public String toString() {
-        return "BoardDto{" +
+        return "CardDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", cards=" + cards +
+                ", tasks=" + tasks +
                 '}';
     }
 }

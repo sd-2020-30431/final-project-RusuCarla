@@ -3,12 +3,16 @@ package com.project.business_layer.mediator;
 import com.project.business_layer.mediator.handler.IHandler;
 import com.project.business_layer.mediator.handler.command.AddBoardHandler;
 import com.project.business_layer.mediator.handler.command.RegisterHandler;
+import com.project.business_layer.mediator.handler.query.GetBoardHandler;
 import com.project.business_layer.mediator.handler.query.GetBoardsHandler;
+import com.project.business_layer.mediator.handler.query.GetCardsHandler;
 import com.project.business_layer.mediator.handler.query.LoginHandler;
 import com.project.business_layer.mediator.request.TRequest;
 import com.project.business_layer.mediator.request.command.AddBoardCommand;
 import com.project.business_layer.mediator.request.command.RegisterCommand;
+import com.project.business_layer.mediator.request.query.GetBoardQuery;
 import com.project.business_layer.mediator.request.query.GetBoardsQuery;
+import com.project.business_layer.mediator.request.query.GetCardsQuery;
 import com.project.business_layer.mediator.request.query.LoginQuery;
 import com.project.business_layer.mediator.response.TResponse;
 import org.springframework.beans.BeansException;
@@ -30,6 +34,8 @@ public class Mediator implements ApplicationContextAware {
 
         _handlerMap.put(LoginQuery.class, LoginHandler.class);
         _handlerMap.put(GetBoardsQuery.class, GetBoardsHandler.class);
+        _handlerMap.put(GetCardsQuery.class, GetCardsHandler.class);
+        _handlerMap.put(GetBoardQuery.class, GetBoardHandler.class);
 
         _handlerMap.put(RegisterCommand.class, RegisterHandler.class);
         _handlerMap.put(AddBoardCommand.class, AddBoardHandler.class);

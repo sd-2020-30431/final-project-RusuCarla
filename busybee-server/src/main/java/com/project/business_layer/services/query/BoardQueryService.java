@@ -38,4 +38,11 @@ public class BoardQueryService {
 
         return boardDtos;
     }
+
+    @Transactional
+    public BoardDto getBoard(int id) {
+        Board board = boardRepository.findById(id);
+        BoardDto boardDto = new BoardDto(board.getId(),board.getName(),board.getCards());
+        return boardDto;
+    }
 }

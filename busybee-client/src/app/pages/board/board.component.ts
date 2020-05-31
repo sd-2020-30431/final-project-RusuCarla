@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {BoardModel} from '../../models/board.model';
-import {ColumnModel} from '../../models/column.model';
-import {HttpClient} from '@angular/common/http';
+import {CardModel} from '../../models/card.model';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 
 @Component({
@@ -14,44 +14,14 @@ export class BoardComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
-
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
-
-  research = [
-    'research1',
-    'research2'
-  ];
-
-  ideas = [
-    'idea1',
-    'idea2',
-    'idea3'
-  ];
-
-  board: BoardModel = new BoardModel('Test board', [
-    new ColumnModel('Ideas', this.ideas),
-    new ColumnModel('Research', this.research),
-    new ColumnModel('Todo', this.todo),
-    new ColumnModel('Done', this.done)
-  ]);
+  board: BoardModel = new BoardModel();
 
   task: string;
 
-  list: ColumnModel = new ColumnModel();
+  card: CardModel = new CardModel();
 
   ngOnInit(): void {
+    this.getBoard();
   }
 
   logout() {
@@ -84,9 +54,13 @@ export class BoardComponent implements OnInit {
   }
 
   add_task() {
+    const modal = document.getElementById('modal-page');
+    modal.style.display = 'none';
   }
 
   add_list() {
+    const modal = document.getElementById('modal-page');
+    modal.style.display = 'none';
   }
 
   display_list_modal() {
@@ -97,6 +71,21 @@ export class BoardComponent implements OnInit {
   close_list_modal() {
     const modal = document.getElementById('modal-list-page');
     modal.style.display = 'none';
+  }
+
+  getBoard() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        boardId: window.localStorage.getItem('boardId')
+      })
+    };
+
+    this.http.get<BoardModel>('http://localhost:8080/boards/getBoard',
+      httpOptions).subscribe(result => {
+        this.board = result;
+        console.table(this.board);
+      },
+      error => console.log(error));
   }
 
 }

@@ -1,14 +1,14 @@
-import {ColumnModel} from './column.model';
+import {CardModel} from './card.model';
 
 export class BoardModel {
   id: number;
   name: string;
-  columns: ColumnModel[];
+  cards: CardModel[];
 
   constructor()
-  constructor(name: string, columns: ColumnModel[])
-  constructor(name?: string, columns?: ColumnModel[]) {
+  constructor(name: string, cards: CardModel[])
+  constructor(name?: string, cards?: CardModel[]) {
     this.name = name
-    this.columns = columns;
+    this.cards = cards;
   }
 }

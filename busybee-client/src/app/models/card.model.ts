@@ -1,4 +1,4 @@
-export class ColumnModel {
+export class CardModel {
   name: string;
   tasks: string[];
 
