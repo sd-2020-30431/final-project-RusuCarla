@@ -1,6 +1,7 @@
 package com.project.utilities.validators;
 
 import com.project.presentation_layer.dto.BoardDto;
+import com.project.presentation_layer.dto.CardDto;
 import com.project.presentation_layer.dto.UserDto;
 
 import java.sql.Timestamp;
@@ -10,6 +11,15 @@ public class Validator {
     public static boolean validateBoardDto(BoardDto boardDto) {
         if (boardDto != null) {
             if (Validator.isAlphanumeric(boardDto.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean validateCardDto(CardDto cardDto) {
+        if (cardDto != null) {
+            if (Validator.isAlphanumeric(cardDto.getName())) {
                 return true;
             }
         }

@@ -45,7 +45,7 @@
           </div>
 
           <div class="bottom-content">
-            <button (click)="display_modal()" class="button is-primary has-text-white" id="task-button"
+            <button (click)="display_task_modal()" class="button is-primary has-text-white" id="task-button"
                     style="width:120px">Add new task
             </button>
           </div>
@@ -55,7 +55,7 @@
             <div class="modal-card" style="top: 30%">
               <header class="modal-card-head">
                 <p class="modal-card-title">Create new task</p>
-                <button (click)="close_modal()" aria-label="close" class="delete"></button>
+                <button (click)="close_task_modal()" aria-label="close" class="delete"></button>
               </header>
               <section class="modal-card-body">
                 <input [(ngModel)]="task" class="input has-background-light is-primary" placeholder="Add task text"
@@ -63,7 +63,7 @@
               </section>
               <footer class="modal-card-foot">
                 <button (click)="add_task()" class="button is-success">Save</button>
-                <button (click)="close_modal()" class="button">Cancel</button>
+                <button (click)="close_task_modal()" class="button">Cancel</button>
               </footer>
             </div>
           </div>
@@ -72,7 +72,7 @@
 
         <div class="new-board-column">
           <div class="align-center">
-            <button (click)="display_list_modal()" class="button is-primary has-text-white" id="board-button" style="width:120px">Add new list</button>
+            <button (click)="display_card_modal()" class="button is-primary has-text-white" id="board-button" style="width:120px">Add new card</button>
           </div>
         </div>
 
@@ -80,16 +80,16 @@
           <div class="modal-background"></div>
           <div class="modal-card" style="top: 30%">
             <header class="modal-card-head">
-              <p class="modal-card-title">Create new list</p>
-              <button (click)="close_list_modal()" aria-label="close" class="delete"></button>
+              <p class="modal-card-title">Create new card</p>
+              <button (click)="close_card_modal()" aria-label="close" class="delete"></button>
             </header>
             <section class="modal-card-body">
-              <input [(ngModel)]="card.name" class="input has-background-light is-primary" placeholder="Add list name"
+              <input [(ngModel)]="card.name" class="input has-background-light is-primary" placeholder="Add card name"
                      type="board-name">
             </section>
             <footer class="modal-card-foot">
-              <button (click)="add_list()" class="button is-success">Save</button>
-              <button (click)="close_list_modal()" class="button">Cancel</button>
+              <button (click)="add_card()" class="button is-success">Save</button>
+              <button (click)="close_card_modal()" class="button">Cancel</button>
             </footer>
           </div>
         </div>

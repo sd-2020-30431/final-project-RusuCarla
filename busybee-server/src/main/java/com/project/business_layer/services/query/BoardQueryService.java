@@ -28,8 +28,8 @@ public class BoardQueryService {
     @Transactional
     public ArrayList<BoardDto> getBoards(int id) {
         ArrayList<BoardDto> boardDtos = new ArrayList<BoardDto>();
-        User user = userRepository.findById(id);
-        ArrayList<UserBoard> userBoards = userBoardRepository.findAllByUserFK(user);
+        //User user = userRepository.findById(id);
+        ArrayList<UserBoard> userBoards = userBoardRepository.findAllByUserFK_Id(id);
 
         for (UserBoard i : userBoards) {
             Board board = boardRepository.findById(i.getBoardFK().getId());
@@ -41,6 +41,7 @@ public class BoardQueryService {
 
     @Transactional
     public BoardDto getBoard(int id) {
+        System.out.println(id+"gggggggggggggggggggggggg");
         Board board = boardRepository.findById(id);
         BoardDto boardDto = new BoardDto(board.getId(),board.getName(),board.getCards());
         return boardDto;

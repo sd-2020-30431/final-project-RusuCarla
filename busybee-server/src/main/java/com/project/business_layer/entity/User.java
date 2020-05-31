@@ -1,5 +1,7 @@
 package com.project.business_layer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
@@ -21,6 +23,7 @@ public class User implements Serializable {
     private String password;
 
     @OneToMany(mappedBy = "userFK")
+    @JsonIgnore
     private List<UserBoard> userBoards;
 
     public int getId() {

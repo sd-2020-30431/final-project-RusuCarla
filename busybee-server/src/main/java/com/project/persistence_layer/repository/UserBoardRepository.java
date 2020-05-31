@@ -13,4 +13,5 @@ public interface UserBoardRepository extends JpaRepository<UserBoard,Integer> {
     ArrayList<UserBoard> findAllByBoardFK(Board boardFK);
     UserBoard findByUserFKAndBoardFK(User userFK, Board boardFK);
     UserBoard findById(int id);
+    ArrayList<UserBoard> findAllByUserFK_Id(int userFK_id);
 }

@@ -43,33 +43,18 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  display_modal() {
+  display_task_modal() {
     const modal = document.getElementById('modal-page');
     modal.style.display = 'block';
   }
 
-  close_modal() {
+  close_task_modal() {
     const modal = document.getElementById('modal-page');
     modal.style.display = 'none';
   }
 
   add_task() {
     const modal = document.getElementById('modal-page');
-    modal.style.display = 'none';
-  }
-
-  add_list() {
-    const modal = document.getElementById('modal-page');
-    modal.style.display = 'none';
-  }
-
-  display_list_modal() {
-    const modal = document.getElementById('modal-list-page');
-    modal.style.display = 'block';
-  }
-
-  close_list_modal() {
-    const modal = document.getElementById('modal-list-page');
     modal.style.display = 'none';
   }
 
@@ -88,4 +73,39 @@ export class BoardComponent implements OnInit {
       error => console.log(error));
   }
 
+  add_card() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        boardId: window.localStorage.getItem('boardId')
+      })
+    };
+
+    this.http.post<string>('http://localhost:8080/cards/addCard', this.card, httpOptions).subscribe(
+      result => {
+        console.log(result);
+        alert('Successfully created board.');
+        window.localStorage.setItem('boardId', String(this.board.id));
+      },
+      error => {
+        console.log(error);
+        alert('ERROR: Wrong input.');
+      });
+    setTimeout(() => {
+      this.getBoard();
+      console.log('GOD FUCKING DAMNIT');
+    }, 2000);
+
+    const modal = document.getElementById('modal-list-page');
+    modal.style.display = 'none';
+  }
+
+  display_card_modal() {
+    const modal = document.getElementById('modal-list-page');
+    modal.style.display = 'block';
+  }
+
+  close_card_modal() {
+    const modal = document.getElementById('modal-list-page');
+    modal.style.display = 'none';
+  }
 }

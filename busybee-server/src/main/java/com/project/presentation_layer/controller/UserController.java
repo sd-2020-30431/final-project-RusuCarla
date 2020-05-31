@@ -24,13 +24,11 @@ public class UserController {
     @PostMapping(value = "/register")
     public ResponseEntity<StringObj> register(@RequestBody UserDto UserDto) {
         if (Validator.validateUserDto(UserDto)) {
-            System.out.println(UserDto);
 
             RegisterCommand registerCommand = new RegisterCommand(UserDto);
             RegisterHandler registerHandler = (RegisterHandler)mediator.<RegisterCommand, RegisterResponse>getHandler(registerCommand);
             RegisterResponse registerResponse = registerHandler.handle(registerCommand);
 
-            System.out.println("got here");
 
             switch (registerResponse.getId()) {
                 case 0:
@@ -46,10 +44,8 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<Integer> login(@RequestBody UserDto UserDto) {
-        System.out.println(UserDto);
         if (!Validator.validateUserDto(UserDto))
             return new ResponseEntity<>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
-        //Integer id = userService.login(UserDto);
 
         LoginQuery loginQuery = new LoginQuery(UserDto);
         LoginHandler loginHandler = (LoginHandler) mediator.<LoginQuery, LoginResponse>getHandler(loginQuery);

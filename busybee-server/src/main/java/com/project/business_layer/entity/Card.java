@@ -1,5 +1,7 @@
 package com.project.business_layer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -23,6 +25,7 @@ public class Card implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "cardFK")
+    @JsonIgnore
     private List<Task> tasks;
 
     public int getId() {

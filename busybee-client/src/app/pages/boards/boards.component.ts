@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {BoardModel} from '../../models/board.model';
@@ -15,7 +15,8 @@ export class BoardsComponent implements OnInit {
   username: string;
   boardNo: number;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.username = window.localStorage.getItem('username');
@@ -80,16 +81,18 @@ export class BoardsComponent implements OnInit {
     }, 1000);
   }
 
-  goToBoard(id: number){
+  goToBoard(id: number) {
     window.localStorage.setItem('boardId', String(id));
     console.log(id);
     this.router.navigateByUrl('/board');
   }
 
-  countBoards(){
+  countBoards() {
     this.boardNo = 0;
-    for (const b of this.boards) {
-      this.boardNo += 1;
+    if (this.boards !== null) {
+      for (const b of this.boards) {
+        this.boardNo += 1;
+      }
     }
   }
 }
