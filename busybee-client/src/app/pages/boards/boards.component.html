@@ -5,7 +5,7 @@
       <h1 class="title has-text-primary">User: {{username}}</h1>
 
       <div class="list-menu">
-        <p>Some user info</p>
+        <p>Number of boards: {{boardNo}}</p>
       </div>
 
       <div class="bottom-content">
@@ -19,12 +19,8 @@
       <!-- Board list -->
 
       <div class="list-menu">
-        <a class="list-menu-item is-active">
-          <p>Board #1</p>
-        </a>
-
-        <a class="list-menu-item">
-          <p>Board #2</p>
+        <a *ngFor="let item of boards" class="list-menu-item" (click)="goToBoard(item.id)">
+          <p>{{item.name}}</p>
         </a>
       </div>
 

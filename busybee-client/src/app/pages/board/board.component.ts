@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {BoardModel} from '../../models/board.model';
 import {ColumnModel} from '../../models/column.model';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -10,7 +12,7 @@ import {ColumnModel} from '../../models/column.model';
 })
 export class BoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   todo = [
     'Get to work',
@@ -50,6 +52,14 @@ export class BoardComponent implements OnInit {
   list: ColumnModel = new ColumnModel();
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.router.navigateByUrl('');
+  }
+
+  back() {
+    this.router.navigateByUrl('/boards');
   }
 
   drop(event: CdkDragDrop<string[]>) {
