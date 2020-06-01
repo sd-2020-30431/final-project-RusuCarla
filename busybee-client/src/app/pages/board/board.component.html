@@ -31,7 +31,7 @@
         <div *ngFor="let column of board.cards" class="board-column">
 
           <div class="column-title">
-            {{column.name}}
+            {{column.name+ column.id}}
           </div>
 
           <div (cdkDropListDropped)="drop($event)"
@@ -39,13 +39,28 @@
                cdkDropList
                class="tasks-container">
             <div *ngFor="let item of column.tasks" cdkDrag class="task">
-              {{ item }}
+              <div class="task-description">{{ item.description }}</div>
+
+              <div *ngIf="item.due===2">
+                <div class="task-date" *ngIf="item.dueDate!==null" style="background: lightgreen"><i class="far fa-clock" style="padding-right: 5px"></i>
+                  {{ item.dueDate.toString().substr(0, 10) }}</div>
+              </div>
+
+              <div *ngIf="item.due===1">
+                <div class="task-date" *ngIf="item.dueDate!==null" style="background: gold"><i class="far fa-clock" style="padding-right: 5px"></i>
+                  {{ item.dueDate.toString().substr(0, 10) }}</div>
+              </div>
+
+              <div *ngIf="item.due===0">
+                <div class="task-date" *ngIf="item.dueDate!==null"  style="background: lightsalmon"><i class="far fa-clock" style="padding-right: 5px"></i>
+                  {{ item.dueDate.toString().substr(0, 10) }}</div>
+              </div>
             </div>
 
           </div>
 
           <div class="bottom-content">
-            <button (click)="display_task_modal()" class="button is-primary has-text-white" id="task-button"
+            <button (click)="display_task_modal(column.id)" class="button is-primary has-text-white" id="task-button"
                     style="width:120px">Add new task
             </button>
           </div>
@@ -58,11 +73,16 @@
                 <button (click)="close_task_modal()" aria-label="close" class="delete"></button>
               </header>
               <section class="modal-card-body">
-                <input [(ngModel)]="task" class="input has-background-light is-primary" placeholder="Add task text"
+                <label>Text</label>
+                <input [(ngModel)]="task.description" class="input has-background-light is-primary" placeholder="Add task text"
                        type="board-name">
+
+                <label>Due Date (optional)</label>
+                <input [(ngModel)]="task.dueDate" class="input has-background-light is-primary" style="margin-top: 10px" type="Date"
+                       placeholder="Add due date">
               </section>
               <footer class="modal-card-foot">
-                <button (click)="add_task()" class="button is-success">Save</button>
+                <button (click)="add_task(lastid)" class="button is-success">Save</button>
                 <button (click)="close_task_modal()" class="button">Cancel</button>
               </footer>
             </div>

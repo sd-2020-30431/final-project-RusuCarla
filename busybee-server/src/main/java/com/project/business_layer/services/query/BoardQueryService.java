@@ -41,7 +41,6 @@ public class BoardQueryService {
 
     @Transactional
     public BoardDto getBoard(int id) {
-        System.out.println(id+"gggggggggggggggggggggggg");
         Board board = boardRepository.findById(id);
         BoardDto boardDto = new BoardDto(board.getId(),board.getName(),board.getCards());
         return boardDto;

@@ -13,4 +13,5 @@ public interface TaskRepository extends JpaRepository<Task,Integer> {
     Task findByDescriptionAndCardFK(String description, Card cardFK);
     Task findByIdAndCardFK(int id, Card cardFK);
     ArrayList<Task> findAllByCardFK(Card cardFK);
+    void deleteAllByCardFK_Id(int cardFK_id);
 }

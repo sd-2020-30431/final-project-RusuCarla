@@ -21,7 +21,6 @@ public class Card implements Serializable {
     private Board boardFK;
 
     @NotNull
-    @Column(unique = true)
     private String name;
 
     @OneToMany(mappedBy = "cardFK")

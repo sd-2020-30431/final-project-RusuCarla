@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {BoardModel} from '../../models/board.model';
 import {CardModel} from '../../models/card.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {TaskModel} from '../../models/task.model';
+import {ConcreteSubject} from "./ConcreteSubject";
+import {ConcreteObserver} from "./ConcreteObserver";
 
 @Component({
   selector: 'app-board',
@@ -12,16 +15,21 @@ import {Router} from '@angular/router';
 })
 export class BoardComponent implements OnInit {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   board: BoardModel = new BoardModel();
-
-  task: string;
-
+  task: TaskModel = new TaskModel();
+  tasks: TaskModel[];
   card: CardModel = new CardModel();
+  cards: CardModel[];
+  lastid: number;
+  observer: ConcreteObserver = new ConcreteObserver();
+  subject: ConcreteSubject = new ConcreteSubject();
 
   ngOnInit(): void {
     this.getBoard();
+    this.subject.attach(this.observer);
   }
 
   logout() {
@@ -32,7 +40,7 @@ export class BoardComponent implements OnInit {
     this.router.navigateByUrl('/boards');
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<TaskModel[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -41,11 +49,36 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+
+    for (const c of this.board.cards) {
+
+      window.localStorage.setItem('cardId', String(c.id));
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          cardId: window.localStorage.getItem('cardId')
+        })
+      };
+
+      this.http.post<string>('http://localhost:8080/tasks/addTasks', c.tasks, httpOptions).subscribe(
+        result => {
+          console.log(result);
+        },
+        error => {
+          console.log(error);
+        });
+
+      window.localStorage.removeItem('cardId');
+      setTimeout(() => {
+        this.getBoard();
+      }, 1000);
+    }
   }
 
-  display_task_modal() {
+  display_task_modal(id: number) {
     const modal = document.getElementById('modal-page');
     modal.style.display = 'block';
+    this.lastid = id;
   }
 
   close_task_modal() {
@@ -53,7 +86,31 @@ export class BoardComponent implements OnInit {
     modal.style.display = 'none';
   }
 
-  add_task() {
+  add_task(id: number) {
+    window.localStorage.setItem('cardId', String(id));
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        cardId: window.localStorage.getItem('cardId')
+      })
+    };
+
+    this.http.post<string>('http://localhost:8080/tasks/addTask', this.task, httpOptions).subscribe(
+      result => {
+        console.log(result);
+        alert('Successfully created task.');
+      },
+      error => {
+        console.log(error);
+        alert('ERROR: Wrong input.');
+      });
+
+    window.localStorage.removeItem('cardId');
+
+    setTimeout(() => {
+      this.getBoard();
+    }, 2000);
+
     const modal = document.getElementById('modal-page');
     modal.style.display = 'none';
   }
@@ -64,14 +121,77 @@ export class BoardComponent implements OnInit {
         boardId: window.localStorage.getItem('boardId')
       })
     };
-
     this.http.get<BoardModel>('http://localhost:8080/boards/getBoard',
       httpOptions).subscribe(result => {
         this.board = result;
         console.table(this.board);
+
+        for (const b of this.board.cards) {
+          window.localStorage.setItem('cardId', String(b.id));
+
+          const httpOptions1 = {
+            headers: new HttpHeaders({
+              cardId: window.localStorage.getItem('cardId')
+            })
+          };
+          this.http.get<TaskModel[]>('http://localhost:8080/tasks/getTasks',
+            httpOptions1).subscribe(result1 => {
+              b.tasks = result1;
+
+              for (const t of b.tasks) {
+                if (t.dueDate !== null) {
+                  this.subject.checkDueDates(t);
+                  t.due = this.observer.due;
+                }
+              }
+            },
+            error => console.log(error));
+          console.log(b.tasks);
+        }
       },
       error => console.log(error));
   }
+
+  getCard(id: number) {
+    window.localStorage.setItem('cardId', String(id));
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        cardId: window.localStorage.getItem('cardId')
+      })
+    };
+
+    this.http.get<CardModel[]>('http://localhost:8080/cards/getCards',
+      httpOptions).subscribe(result => {
+        this.cards = result;
+        console.table(this.cards);
+      },
+      error => console.log(error));
+  }
+
+  getTasks(id: number) {
+    let tasks;
+    window.localStorage.setItem('cardId', String(id));
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        cardId: window.localStorage.getItem('cardId')
+      })
+    };
+
+    this.http.get<TaskModel[]>('http://localhost:8080/tasks/getTasks',
+      httpOptions).subscribe(result => {
+        tasks = result;
+        console.log('HERERERR');
+        console.table(tasks);
+      },
+      error => console.log(error));
+
+    console.log('dsgferg');
+    console.table(tasks);
+    return tasks;
+  }
+
 
   add_card() {
     const httpOptions = {
@@ -83,7 +203,7 @@ export class BoardComponent implements OnInit {
     this.http.post<string>('http://localhost:8080/cards/addCard', this.card, httpOptions).subscribe(
       result => {
         console.log(result);
-        alert('Successfully created board.');
+        alert('Successfully created card.');
         window.localStorage.setItem('boardId', String(this.board.id));
       },
       error => {
@@ -92,7 +212,6 @@ export class BoardComponent implements OnInit {
       });
     setTimeout(() => {
       this.getBoard();
-      console.log('GOD FUCKING DAMNIT');
     }, 2000);
 
     const modal = document.getElementById('modal-list-page');
@@ -107,5 +226,11 @@ export class BoardComponent implements OnInit {
   close_card_modal() {
     const modal = document.getElementById('modal-list-page');
     modal.style.display = 'none';
+  }
+
+  do() {
+    for (const b of this.board.cards) {
+      console.log(b.tasks);
+    }
   }
 }

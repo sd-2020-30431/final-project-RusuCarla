@@ -1,26 +1,18 @@
-package com.project.business_layer.entity;
+package com.project.presentation_layer.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
-@Entity
-@Table
-public class Task implements Serializable {
+public class TaskDto {
 
-    @Id
-    @GeneratedValue
-    @Column(nullable = false,updatable = false)
     private int id;
-
-    @ManyToOne
-    private Card cardFK;
-
-    @NotNull
     private String description;
-
     private Timestamp dueDate;
+
+    public TaskDto(int id, String description, Timestamp dueDate) {
+        this.id = id;
+        this.description = description;
+        this.dueDate = dueDate;
+    }
 
     public int getId() {
         return id;
@@ -28,14 +20,6 @@ public class Task implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Card getCardFK() {
-        return cardFK;
-    }
-
-    public void setCardFK(Card cardFK) {
-        this.cardFK = cardFK;
     }
 
     public String getDescription() {
@@ -56,9 +40,8 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "TaskDto{" +
                 "id=" + id +
-                ", cardFK=" + cardFK +
                 ", description='" + description + '\'' +
                 ", dueDate=" + dueDate +
                 '}';
