@@ -119,14 +119,16 @@
       display: flex;
       background: white;
       padding: 10px 12px;
+      border-radius: 4px;
     }
 
     .task-date {
       font-family: 'Nunito';
+      font-width: bold;
       display: flex;
       background: white;
       padding: 10px 12px;
-      border-top: solid 2px #ddd;
+
     }
   }
 }

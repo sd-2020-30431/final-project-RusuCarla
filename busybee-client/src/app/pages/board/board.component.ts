@@ -5,8 +5,9 @@ import {CardModel} from '../../models/card.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {TaskModel} from '../../models/task.model';
-import {ConcreteSubject} from "./ConcreteSubject";
-import {ConcreteObserver} from "./ConcreteObserver";
+import {ConcreteSubject} from './ConcreteSubject';
+import {ConcreteObserver} from './ConcreteObserver';
+import {StringObjModel} from '../../models/stringObj.model';
 
 @Component({
   selector: 'app-board',
@@ -26,8 +27,13 @@ export class BoardComponent implements OnInit {
   lastid: number;
   observer: ConcreteObserver = new ConcreteObserver();
   subject: ConcreteSubject = new ConcreteSubject();
+  member: string;
+  access: string;
+  isView: boolean;
+  stringObj: StringObjModel = new StringObjModel();
 
   ngOnInit(): void {
+    this.getAccess();
     this.getBoard();
     this.subject.attach(this.observer);
   }
@@ -76,9 +82,11 @@ export class BoardComponent implements OnInit {
   }
 
   display_task_modal(id: number) {
-    const modal = document.getElementById('modal-page');
-    modal.style.display = 'block';
-    this.lastid = id;
+    if (this.isView === false) {
+      const modal = document.getElementById('modal-page');
+      modal.style.display = 'block';
+      this.lastid = id;
+    }
   }
 
   close_task_modal() {
@@ -219,8 +227,10 @@ export class BoardComponent implements OnInit {
   }
 
   display_card_modal() {
-    const modal = document.getElementById('modal-list-page');
-    modal.style.display = 'block';
+    if (this.isView === false) {
+      const modal = document.getElementById('modal-list-page');
+      modal.style.display = 'block';
+    }
   }
 
   close_card_modal() {
@@ -228,9 +238,84 @@ export class BoardComponent implements OnInit {
     modal.style.display = 'none';
   }
 
-  do() {
-    for (const b of this.board.cards) {
-      console.log(b.tasks);
+  display_member_modal() {
+    if (this.isView === false) {
+      const modal = document.getElementById('modal-member-page');
+      modal.style.display = 'block';
     }
+  }
+
+  add_edit_member() {
+    console.log('BBBBBBBBBBBBBBBBBBBB ' + this.member);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        boardId: window.localStorage.getItem('boardId')
+      })
+    };
+
+    this.stringObj.msg = this.member
+    console.log('ggggggggggggggggg' + this.stringObj.msg);
+    this.http.post<string>('http://localhost:8080/userBoards/addEditMember', this.stringObj.msg, httpOptions).subscribe(
+      result => {
+        console.log(result);
+        alert('Successfully added member.');
+      },
+      error => {
+        console.log(error);
+        alert('ERROR: Wrong input.');
+      });
+
+    const modal = document.getElementById('modal-member-page');
+    modal.style.display = 'none';
+  }
+
+  add_view_member() {
+    console.log('BBBBBBBBBBBBBBBBBBBB ' + this.member);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        boardId: window.localStorage.getItem('boardId')
+      })
+    };
+
+    this.http.post<string>('http://localhost:8080/userBoards/addViewMember', this.member, httpOptions).subscribe(
+      result => {
+        console.log(result);
+        alert('Successfully added member.');
+      },
+      error => {
+        console.log(error);
+        alert('ERROR: Wrong input.');
+      });
+
+    const modal = document.getElementById('modal-member-page');
+    modal.style.display = 'none';
+  }
+
+  close_member_modal() {
+    const modal = document.getElementById('modal-member-page');
+    modal.style.display = 'none';
+  }
+
+  private getAccess() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        boardId: window.localStorage.getItem('boardId'),
+        userId: window.localStorage.getItem('userId')
+      })
+    };
+
+    this.http.get<StringObjModel>('http://localhost:8080/userBoards/getAccess',
+      httpOptions).subscribe(result => {
+        this.access = result.msg;
+        console.table('AAAAAAAAAAAAAAAAAAAAAAAAA ' + result.msg);
+        if (this.access === 'Edit') {
+          this.isView = false;
+        } else {
+          this.isView = true;
+        }
+      },
+      error => console.log(error));
   }
 }

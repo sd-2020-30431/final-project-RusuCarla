@@ -29,12 +29,15 @@ public class Mediator implements ApplicationContextAware {
         _handlerMap.put(GetCardsQuery.class, GetCardsHandler.class);
         _handlerMap.put(GetBoardQuery.class, GetBoardHandler.class);
         _handlerMap.put(GetTasksQuery.class, GetTasksHandler.class);
+        _handlerMap.put(GetAccessQuery.class, GetAccessHandler.class);
 
         _handlerMap.put(RegisterCommand.class, RegisterHandler.class);
         _handlerMap.put(AddBoardCommand.class, AddBoardHandler.class);
         _handlerMap.put(AddCardCommand.class, AddCardHandler.class);
         _handlerMap.put(AddTaskCommand.class, AddTaskHandler.class);
         _handlerMap.put(AddTasksCommand.class, AddTasksHandler.class);
+        _handlerMap.put(AddEditMemberCommand.class, AddEditMemberHandler.class);
+        _handlerMap.put(AddViewMemberCommand.class, AddViewMemberHandler.class);
 
     }
 

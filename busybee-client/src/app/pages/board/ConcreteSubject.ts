@@ -49,23 +49,23 @@ export class ConcreteSubject implements Subject {
   public checkDueDates(task: TaskModel): void {
     const taskDate = this.parseDate(task.dueDate);
 
-    console.log(taskDate);
-    console.log(this.date);
+    // console.log(taskDate);
+    // console.log(this.date);
 
     let time: number;
     let days: number;
     time = taskDate.getTime() - this.date.getTime();
     days = Math.ceil(time / (1000 * 3600 * 24));
-    console.log('days: ' + days);
+    // console.log('days: ' + days);
 
     if (days <= 3 && days > 0){
-      console.log('ALMOST DUE');
+      // console.log('ALMOST DUE');
       this.state = 1;
     }else if (days <= 0) {
-      console.log('OVERDUE');
+      // console.log('OVERDUE');
       this.state = 0;
     }else {
-      console.log('NOT YET DUE');
+      // console.log('NOT YET DUE');
       this.state = 2;
     }
     this.notify();
